@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Campus & Grails Junio 2013 - Groovy</title>
+
+		<meta name="description" content="Campus Groovy & Grails Junio 2013 ">
+		<meta name="author" content="Roberto Perez Alcolea">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Introducción a Groovy</h1>
+					<p>
+						<small>Creado por <a href="mailto:pr@manoderecha.mx">Roberto Pérez Alcolea</a> / <a target="_blank" href="http://twitter.com/rpalcolea">@rpalcolea</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>¿Qué es?</h2>
+					<p>
+                        Es un  lenguaje dinámico para la JVM inspirado en lenguajes como Python, Ruby y Smalltalk; cuyo principal motivo es extender Java.
+					</p>
+
+                    <p>
+                        Al contar con Meta Object Protocol (MOP), Groovy agrega poderosas capacidades de programación dinámicas, Domain-specific languages (DSLs) y una gran cantidad de métodos que permiten simplicar código.
+                    </p>
+
+				</section>
+
+                <section>
+                    <h2>Características y ventajas</h2>
+                    <ul>
+                        <li>Imports implícitos</li>
+                        <li>Return opcional</li>
+                        <li>Duck typing</li>
+                        <li>Permite evaluar instancias, nulos, cadenas vacías y colecciones</li>
+                        <li>Las clases, propiedades y métodos por defecto son públicos</li>
+                        <li>Extiende JUnit</li>
+                        <li>Expandos</li>
+                        <li>Domain Specific Languages (DSLs)</li>
+                        <li>Comilado estático</li>
+                        <li>Closures</li>
+                    </ul>
+
+                </section>
+
+				<section>
+					<section>
+						<h2>Duck typing</h2>
+						<p>
+                            Groovy soporta el typing opcional, determinando el tipo actual en modo de ejecución e invoca los métodos en los objetos
+                            en caso de que existan.
+						</p>
+
+					</section>
+					<section>
+						<h2>¿Duck typing?</h2>
+						<p>Si camina y habla como un pato, considéralo un pato</p>
+					</section>
+					<section>
+                        <h2>Ejemplo</h2>
+                        <pre><code data-trim contenteditable>
+def x
+
+x = 1
+assert x instanceof Integer
+
+x = 10.34
+assert x instanceof BigDecimal
+                    </code></pre>
+					</section>
+
+				</section>
+
+
+                <section>
+                    <section>
+                        <h2>Colecciones y mapas</h2>
+                        <p>
+                            Groovy cuenta con soporte nativo para colecciones, listas, mapas y arreglos. Una vez que creamos una colección en Groovy, resulta difícil
+                            volver a la forma en que se hace en Java.
+                        </p>
+
+                    <pre><code data-trim contenteditable>
+//Código Java
+List&lt;String> lista = new ArrayList&lt;String>();
+lista.add("Groovy");
+lista.add("Grails");
+lista.add("Gradle");
+
+//Código Groovy
+List&lt;String> lista = ["Groovy","Grails","Gradle"]
+//Otra forma
+def lista =  ["Groovy","Grails","Gradle"]
+                    </code></pre>
+
+                    </section>
+                    <section>
+
+                        <p>No existen nuevos tipos de colecciones en Groovy.</p>
+                        <ul>
+                            <li>List = java.util.ArrayList</li>
+                            <li>Set = java.util.HashSet </li>
+                            <li>Map = java.util.LinkedHashMap</li>
+                        </ul>
+                         <p>
+                            Si se requieren características u otras implementaciones como LinkedList o TreeMap,
+                            solo se deben crear explícitamente como se hace en Java.</p>
+                    </section>
+                    <section>
+                        <h2>Listas</h2>
+                        <p>Colección ordenada de objetos</p>
+                        <pre><code data-trim contenteditable>
+def lista = [1,2,3,4]
+assert lista.class == ArrayList
+                        </code></pre>
+
+                        <p>Podemos utilizar [] para asignar una nueva lista vacía y << para agregar elementos a la misma.</p>
+                           <pre><code data-trim contenteditable>
+def lista = []
+lista << "Groovy"
+                           </code></pre>
+                        <p>Para agregar elementos a la lista</p>
+                           <pre><code data-trim contenteditable>
+def lista = []
+lista += 1
+lista.leftShift(2)
+lista.add(3)
+lista.addAll([4,5,6])
+assert lista == [1,2,3,4,5,6]
+                           </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Listas</h2>
+                        <p>each o eachWithIndex para ejecutar operaciones en cada elemento.</p>
+                        <pre><code data-trim contenteditable>
+def lista = [1,2,3]
+lista.each { println "Número: $it"}
+lista.eachWithIndex { it, i -> println "$i: $it"}
+                        </code></pre>
+
+                        <p>Para remover elementos de una lista</p>
+                           <pre><code data-trim contenteditable>
+def lista = ["Campus","Groovy","Grails"]
+lista.remove("Groovy")
+assert lista == ["Campus","Grails"]
+
+def lista2 = [1,3,4]
+/Limpiar los elementos
+lista2.clear()
+assert lista2 == []
+
+lista2.addAll([1,2,3])
+//Pop sobre último elemento
+assert lista2.pop() == 3
+assert lista2 == [1,2]
+                           </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h2>Listas</h2>
+                        <p>Algunos métodos que pueden ser de gran ayuda.</p>
+
+                           <pre><code data-trim contenteditable>
+def lista = ["Campus","Groovy","Grails"]
+assert lista.contains('Campus')
+assert lista.containsAll(["Campus","Grails"])
+
+assert [].isEmpty()
+
+def numeros = [3,2,1,5,4]
+assert numeros.sort() == [1,2,3,4,5]
+
+lista = ['a','ab','abc','abcd']
+lista.removeAll(["a","ab"])
+assert lista == ['abc','abcd']
+
+Collections.replaceAll(lista, 'abc','xyz')
+assert lista == ['xyz','abcd']
+
+lista << 'xyz'
+assert lista == ['xyz','abcd','xyz']
+assert lista.unique() ==  ['xyz','abcd']
+
+Collections.shuffle(lista, new Random())
+
+                           </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h2>Mapas</h2>
+                        <p>Relación de llaves únicas con sus valores</p>
+                        <pre><code data-trim contenteditable>
+def mapa = [:]
+mapa = ['nombre':'Roberto', 'framework':'Grails', 'lenguaje':'Groovy']
+assert mapa.nombre == 'Roberto'
+
+mapa.put('apellido','Pérez')
+assert mapa.size() == 4
+
+mapa.each { println "$it.key: $it.value" }
+mapa.eachWithIndex { it, i -> println "$i: $it"}
+
+assert [:].isEmpty()
+assert mapa.containsKey('nombre')
+assert mapa.containsValue('Roberto')
+
+println mapa.keySet()
+println mapa.values()
+                        </code></pre>
+
+                    </section>
+
+
+                </section>
+
+				<section>
+                    <section>
+                        <h2>Propiedades</h2>
+                        <p>
+                            Así como existen los POJOs (Plain Old Java Objects) y JavaBeans, los cuales son clases sin funcionalidad extra y tienen setters/getters para sus atributos; en Groovy tenemos POGOs (Plain Old Groovy Objects) que funcionan de la misma manera pero son más compactos.
+                        </p>
+                        <p>
+                            Groovy genera automáticamente los getters y setters para propiedades públicas durante la compilación.
+                            Sin embargo, podemos modificar este comportamiento en caso de ser necesario. De la misma manera, podemos tener propiedades solo lectura o solo escritura. Para crear una propiedad de solo lectura debemos marcar el campo como final.
+                        </p>
+
+                    </section>
+
+                    <section>
+                        <h2>Propiedades</h2>
+                                                <pre><code data-trim contenteditable>
+class Persona {
+    String nombre
+    String apellidos
+}
+
+def persona = new Persona(nombre:"Roberto",apellidos:"Pérez Alcolea")
+
+assert persona.getNombre() == 'Roberto'
+                                                </code></pre>
+
+                        <p>Agregando un getter</p>
+
+                        <pre>
+                            <code data-trim contenteditable>
+class Persona {
+    String nombre
+    String apellidos
+
+    def getNombre() {
+        this.nombre = nombre?.toUpperCase()
+    }
+}
+
+def persona = new Persona(nombre:"Roberto",apellidos:"Pérez Alcolea")
+
+assert persona.getNombre() == 'ROBERTO'
+
+                            </code>
+                        </pre>
+
+                    </section>
+
+				</section>
+
+
+                <section>
+                    <section>
+                        <h2>Estructuras de control</h2>
+                        <h3>If-Else</h3>
+                        <p>
+                         Groovy Soporta la sintaxis if-else de Java.
+                        </p>
+                        <pre><code data-trim contenteditable>
+def x = 3
+
+if(x==1) {
+    println "Uno"
+} else if(x==2) {
+    println "Dos"
+} else {
+    println "X mayor a Dos"
+}
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h3>Operador Elvis (?:)</h3>
+                        <p>
+                            Usualmente podemos encontrarnos condiciones if-else como la siguiente:
+                        </p>
+                        <pre><code data-trim contenteditable>
+def x = true
+def y
+
+if(x) {
+    y = "si"
+} else {
+    y = "no"
+}
+                        </code></pre>
+                        <p>
+                            En este tipo de comparaciones es donde podemos usar el operador ternario, soportado tanto en Java como en Groovy., conviertiendo las 4 líneas de código en una sola línea. La sintaxis de este operador es igual para Java y Groovy: (Condición) ? valor-si-cumple : valor-si-no-cumple.
+                        </p>
+                        <pre><code data-trim contenteditable>
+def x = false
+def y = (x) ? "si" : "no"
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h3>Switch</h3>
+                        <p>
+                            El switch en Groovy es compatible con código Java; soporta los siguientes tipos de comparaciones:
+                        </p>
+                        <ul>
+                           <li>Coincidencias entre clases.</li>
+                            <li>Coincidencia con expresiones regulares.</li>
+                            <li>Si el valor está presente en una colección.</li>
+                            <li>Si no es uno de estos, se buscan coincidencias en los valores.</li>
+
+                        </ul>
+
+                        <pre><code data-trim contenteditable>
+def x = "prueba"
+def resultado = ""
+
+switch (x) {
+    case "prueba":
+        resultado = "coincidencia"
+        break
+    case String:
+        resultado = "String"
+        break
+}
+                        </code></pre>
+
+                    </section>
+
+
+                    <section>
+                        <h3>While</h3>
+                        <p>
+                            Soporta el While como en Java
+                        </p>
+
+
+                        <pre><code data-trim contenteditable>
+def x = 1
+def y = 6
+
+while ( y-- > 0 ) {
+    x++
+}
+
+assert x == 7
+
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h3>For</h3>
+                        <p>
+                            El ciclo for en Groovy es más simple y trabaja con cualquier clase de arreglo, colección y mapa.
+                        </p>
+
+
+                        <pre><code data-trim contenteditable>
+def x = 0
+for (i in 0 .. 30) {
+    x += i
+}
+
+x = 0
+for( i in [5,3,2,1] ) {
+    x += i
+}
+
+array = (0..20).toArray()
+x = 0
+for (i in array) {
+    x += i
+}
+
+                        </code></pre>
+
+                    </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Operadores</h2>
+                        <h3>Sobrecarga de operadores</h3>
+                        <p>
+                            Groovy soporta la sobrecarga de operadores que permite trabajar con Números, Colecciones, Mapas y otros tipos de datos fácilmente
+                        </p>
+                        <table>
+                            <tr>
+                                <td  style="width: 50%">
+                                    <ul>
+                                        <li>a + b </li>
+                                        <li> a – b </li>
+                                        <li> a * b</li>
+                                        <li> a ** b</li>
+                                        <li> a / b </li>
+                                        <li> a % b </li>
+                                        <li> a | b </li>
+                                        <li> a & b </li>
+                                        <li> a ^b  </li>
+                                        </ul>
+                                </td>
+                                <td  style="width: 50%">
+                                    <ul>
+                                        <li> a++ o ++a</li>
+                                        <li> a—o –-a </li>
+                                        <li> a[b]  </li>
+                                        <li> a[b] = c </li>
+                                        <li> a << b </li>
+                                        <li> a >> b </li>
+                                        <li> switch(a) { case(b): } </li>
+                                        <li> -a  </li>
+                                        <li> +a  </li>
+
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    </section>
+
+                    <section>
+                        <h3>Operador Spread (*)</h3>
+                        <p>
+                            Permite invocar una acción en todos los elementos de un objeto. Es equivalente a invocar el método collect.
+                        </p>
+                        <pre><code data-trim contenteditable>
+def tecnologias = ['Groovy','Grails','Java']
+assert tecnologias*.toUpperCase() == tecnologias.collect {
+        tecnologia -> tecnologia?.toUpperCase()
+}
+assert tecnologias*.toUpperCase() == ['GROOVY','GRAILS','JAVA']
+                        </code></pre>
+
+
+                    </section>
+
+                    <section>
+                        <h3>Operador Safe Navigation (?)</h3>
+                        <p>
+                            Es utilizado para evitar una NullPointerException. Usualmente cuando tenemos referencia a un objeto necesitamos verificar que no es nulo antes de invocar sus métodos o tener acceso a sus propiedades. Para evitar esto, el operador safe navigation simplemente regresará un nulo en lugar de una excepción.
+                        </p>
+
+                        <pre><code data-trim contenteditable>
+def persona = new Persona()
+def nombre = persona?.nombre
+
+                        </code></pre>
+
+                    </section>
+
+
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Closures</h2>
+                        <p>
+                            Bloque de código anónimo que puede tomar argumentos, regresar un valor, así como referenciar y utilizar variables declaradas en su alcance                        </p>
+                        <p>
+
+                            Una diferencia importante entre un closure y un método es que los closures no requieren una clase o un nombre. Otra diferencia importante es que los closures permiten hacer referencia a variables del alcance desde el cual han sido invocados.
+                        </p>
+
+
+                    </section>
+
+                    <section>
+                        <h3>Definición</h3>
+                        <p>
+                            La definición de un closure sigue la siguiente sintaxis:
+</p>
+                        <pre><code data-trim contenteditable>
+{ [argumentos ->] lógica}
+
+                        </code></pre>
+                       <p>
+                           Donde [argumentos ->] es una serie de argumentos opcionales delimitados por coma, y la lógica son líneas de código en Groovy a ejecutar. Los argumentos se asemejan a una lista de parámetros de un método, los cuales pueden tener o no tipo. El caracter ‘->’ es requerido para separar los argumentos de la lógica del closure.
+
+                       </p>
+
+                    </section>
+
+                    <section>
+                        <h3>Ejemplos</h3>
+
+                        <pre><code data-trim contenteditable>
+{ a++ }
+
+{ println it }
+
+{ nombre -> println nombre }
+
+{ String x, int y -> println "$x $y" }
+
+def calc = { x, y ->
+    x * y
+}.memoize()
+
+def resultado = calc(4,5)
+
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h3>Semántica</h3>
+                        <ul>
+                            <li>Tienen un método implícito llamado doCall()</li>
+                            <li>Un closure puede ser invocado a través del método call() o con una invocación sin nombre (). De cualquier manera, Groovy se encarga de trasladar esto a una llamada al método doCall().</li>
+                            <li>Pueden tener 1..N argumentos, con o sin tipo. El primer parámetro está disponible como it si no hay argumentos explícitos.</li>
+                            <li>Siempre regresan un valor. </li>
+                            <li>El cuerpo de un closure no es ejecutado hasta que ha sido invocado explícitamente. </li>
+
+                        </ul>
+                    </section>
+
+
+                </section>
+
+                <section>
+                    <h2>Expando</h2>
+                    <p>La clase Expando es un objeto dinámico que nos permite agregar propiedades y closures como métodos a una instancia de esta clase. Esto es útil cuando no queremos crear una nueva clase.</p>
+                    <pre><code data-trim contenteditable>
+def persona = new Expando(nombre:"Roberto")
+assert 'Roberto' == persona.nombre
+
+persona.apellido = 'Pérez'
+assert 'Pérez' == persona.apellido
+
+persona.showInfo = { out ->
+    out << "Nombre: $nombre"
+    out << ", Apellido: $apellido"
+}
+
+def sw = new StringWriter()
+println persona.showInfo(sw)
+                    </code></pre>
+                </section>
+
+
+
+                <section>
+                    <section>
+                        <h2>Metaprogramación</h2>
+                        <p>
+                            El MOP (Meta Object Protocol) de Groovy es la clave para hacer posible las características del lenguaje. Todas las clases obtienen una metaclase, la cual se encarga de interceptar todas las llamadas a los métodos y permite personalizar cómo son invocados, de la misma manera, permite añadir y eliminar métodos. Esto es lo que hace a Groovy un lenguaje dinámico; en comparación de Java, el cual compila los métodos y no permite los cambios en modo de ejecución.
+                        </p>
+
+
+                    </section>
+
+                    <section>
+                        <h3>Agregando métodos</h3>
+                        <p>
+                            La sintaxis para agregar un método en modo de ejecución es simplemente uno que registra un Closure en la metaclase asociando el nombre del método.                        </p>
+                        <pre><code data-trim contenteditable>
+String.metaClass.testAdd = {
+    println "Agregamos esto"
+}
+
+String x = "test"
+x?.testAdd()
+
+                        </code></pre>
+
+
+                    </section>
+
+                    <section>
+                        <h3>Interceptando llamadas a métodos</h3>
+                        <p>
+                            Para interceptar llamadas a métodos es posible  sobre escribir el método invokeMethod de la clase para manipularlo.
+                        </p>
+                        <pre><code data-trim contenteditable>
+class Test implements GroovyInterceptable {
+    def suma(Integer x, Integer y) { x + y }
+
+    def invokeMethod(String name, args) {
+        System.out.println "Has llamado
+            al método $name con argumentos: $args"
+    }
+}
+
+def test = new Test()
+test.suma(2,3)
+test.resta(2,3)
+
+                        </code></pre>
+
+
+                    </section>
+
+
+                    <section>
+                        <h3>methodMissing y propertyMissing</h3>
+                        <p>
+                            La clase GroovyObject no tiene los métodos methodMissing y propertyMissing por defecto; sin embargo, podemos agregarlo</p>
+                        <pre><code data-trim contenteditable>
+class Persona {
+    String nombre
+
+    def propertyMissing(String propiedad) {
+        if('ombre'.equals(propiedad)) { return nombre }
+        throw new MissingPropertyException(propiedad, getClass())
+    }
+
+    def methodMissing(String methodName, args) {
+        if('nombreUpper'.equals(methodName)) {
+                            nombre = nombre?.toUpperCase()
+                            return }
+        throw new MissingMethodException(methodName, getCalss(), args)
+    }
+}
+                        </code></pre>
+
+
+                    </section>
+
+
+
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>TypeChecked</h2>
+                        <p>
+                            Muchos desarrolladores utilizan e introducen Groovy en sus aplicaciones Java como una extensión; en estos casos, muchas veces no se requieren todas las capacidades dinámicas ofrecidas por el lenguaje y comúnmente se espera una respuesta similar del compilador de Groovy en comparación con el de Java. Para esta necesidad, Groovy provee la anotación @TypeChecked.
+                        </p>
+
+                        <pre><code data-trim contenteditable>
+import groovy.transform.TypeChecked
+
+void testMethod() {}
+
+@TypeChecked
+void test() {
+    testMeethod()
+
+    def nombre = "Roberto"
+
+    println nombree
+
+}
+
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <p>
+                            De la misma manera, esto permite verificar que el valor de retorno y los valores de las asignaciones sean coherentes:
+                        </p>
+                        <pre><code data-trim contenteditable>
+import groovy.transform.TypeChecked
+
+@TypeChecked
+Integer test() {
+    Integer num = "1"
+
+    Integer[] numbers = [1,2,3,4]
+
+    Date date = numbers[1]
+
+    return "Test"
+
+}
+
+                        </code></pre>
+
+
+                    </section>
+
+
+                </section>
+
+
+
+                <section>
+                    <h2>Static Compilation</h2>
+                    <p>
+                        Groovy soporta la nueva instrucción “invoke dynamic” de la JVM, la cual facilita el desarrollo de lenguajes dinámicos en la plataforma Java y además, mejora el rendimiento en los llamados dinámicos de Groovy.
+                        @StaticCompilation  permite mejorar el desempeño al permitir que el código sea compilado estáticamente.
+
+                    </p>
+                    <pre><code data-trim contenteditable>
+import CompileStatic
+
+@CompileStatic
+int suma(int x, int y) {
+    x + y
+}
+
+assert suma(2,5) == 7
+
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Ecosistema Groovy</h2>
+                    <ul>
+                       <li>Griffon</li>
+                        <li>Gradle</li>
+                        <li>Ratpack</li>
+                        <li>Geb</li>
+                        <li>Spock</li>
+                        <li>GPars</li>
+                        <li>Codenarc</li>
+
+                    </ul>
+                </section>
+
+                <section data-state="soothe">
+					<h2>Dudas y/o comentarios</h2>
+				</section>
+
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
