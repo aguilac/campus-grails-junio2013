@@ -1,23 +1,17 @@
 package demo
-import org.joda.time.*
-import org.jadira.usertype.dateandtime.joda.*
 
 class Horario {
 
     Dia dia
-    TimeOfDay horaInicio
-    TimeOfDay horaFin
+    String horaInicio
+    String horaFin
 
     static belongsTo = [medico:Medico]
 
     static constraints = {
         dia(unique: ['medico'], nullable: false)
-        horaInicio(nullable: false)
-        horaFin(nullable: false)
+        horaInicio(nullable: false, matches: ('([01]?[0-9]|2[0-3]):[0-5][0-9]'))
+        horaFin(nullable: false, matches: ('([01]?[0-9]|2[0-3]):[0-5][0-9]'))
     }
 
-    static mapping = {
-        horaInicio type: PersistentTimeOfDay
-        horaFin type: PersistentTimeOfDay
-    }
 }

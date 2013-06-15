@@ -2,8 +2,6 @@ package demo
 
 import grails.validation.Validateable
 
-
-@Validateable
 class Contacto {
     String calle
     Integer numeroInterior

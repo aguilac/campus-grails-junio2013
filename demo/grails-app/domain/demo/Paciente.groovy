@@ -5,8 +5,6 @@ class Paciente {
     Date fechaNacimiento
     String ocupacion
 
-    static embedded = ['contacto']
-
     static constraints = {
         ocupacion(blank: false)
         contacto(nullable: false)
