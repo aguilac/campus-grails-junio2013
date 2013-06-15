@@ -17,7 +17,10 @@ class Horario {
     }
 
     static mapping = {
+        table 'horarios'
         horaInicio type: PersistentTimeOfDay
         horaFin type: PersistentTimeOfDay
+        medico column: 'medico_id'
+        cache: true
     }
 }

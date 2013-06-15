@@ -9,6 +9,10 @@ class Cita {
     Date fechaFin
     EstadoCita estado = EstadoCita.AGENDADA
 
+    //Autotimestamp
+    Date dateCreated
+    Date lastUpdated
+
     static constraints = {
         medico(nullable: false)
         paciente(nullable: false)
@@ -21,6 +25,11 @@ class Cita {
         estado(nullable: false)
     }
 
+    static mapping = {
+        table 'medicos'
+        sort 'fechaInicio'
+    }
+
     def beforeInsert() {
         calcularFechaFin()
     }
@@ -28,6 +37,7 @@ class Cita {
     def beforeUpdate() {
         calcularFechaFin()
     }
+
 
     def calcularFechaFin() {
         use(TimeCategory) {

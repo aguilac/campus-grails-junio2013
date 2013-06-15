@@ -7,6 +7,9 @@ class Pago {
     Double extras = 0
     EstadoPago estadoPago = EstadoPago.PENDIENTE
     String notas
+    Double total
+    Date dateCreated
+    Date lastUpdated
 
     static constraints = {
         formaPago(nullable: false)
@@ -17,5 +20,10 @@ class Pago {
         notas(blank: true)
     }
 
+    static mapping = {
+        //Propiedades derivadas
+        total formula: 'COSTO + EXTRAS'
+        sort dateCreated: 'asc'
+    }
 
 }

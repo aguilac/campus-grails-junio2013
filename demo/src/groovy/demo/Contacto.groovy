@@ -11,7 +11,7 @@ class Contacto {
     String codigoPostal
     String estado
     String pais
-    String telefono //TODO: agregar expresión regular
+    String telefono
     String email
 
     static constraints = {
@@ -21,7 +21,7 @@ class Contacto {
         codigoPostal(nullable: true)
         estado(blank: false)
         pais(blank: false)
-        telefono()
+        telefono(matches: '\\d{3}\\-\\d{7}')
         email(blank: false, email: true)
     }
 }

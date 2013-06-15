@@ -6,4 +6,9 @@ class Especialidad {
     static constraints = {
         nombre(blank: false, unique: true)
     }
+
+    static mapping = {
+        //Cache (read-write)
+        cache: true
+    }
 }
