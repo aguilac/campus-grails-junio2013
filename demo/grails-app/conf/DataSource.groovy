@@ -1,3 +1,4 @@
+
 dataSource {
     pooled = true
     driverClassName = "org.h2.Driver"
@@ -8,6 +9,7 @@ hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = true
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
+    //naming_strategy = 'demo.DBStrategy' //Personalizar la estrategia para generación de tablas y columnas
 }
 // environment specific settings
 environments {
