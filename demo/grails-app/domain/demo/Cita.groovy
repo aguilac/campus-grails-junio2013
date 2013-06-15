@@ -7,6 +7,7 @@ class Cita {
     Paciente paciente
     Date fechaInicio
     Date fechaFin
+    EstadoCita estado = EstadoCita.AGENDADA
 
     static constraints = {
         medico(nullable: false)
@@ -17,6 +18,7 @@ class Cita {
         fechaInicio validator: { val, obj ->
              val.before(obj.fechaFin)
         }
+        estado(nullable: false)
     }
 
     def beforeInsert() {

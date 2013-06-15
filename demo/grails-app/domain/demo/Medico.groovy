@@ -9,7 +9,6 @@ class Medico {
 
     static embedded = ['contacto']
 
-
     static constraints = {
         contacto(nullable: false)
         costoCita(nullable: false, minSize: 0)

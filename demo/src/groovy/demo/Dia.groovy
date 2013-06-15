@@ -31,4 +31,7 @@ public enum Dia {
     static def getById(Long id){
         Dia?.list()?.find { it.id == id }
     }
+
+    String getMessageCode() { return "${getClass().name}.${name()}" }
+
 }
