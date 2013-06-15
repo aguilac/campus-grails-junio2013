@@ -99,3 +99,14 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'demo.UsuarioR
 grails.plugins.springsecurity.authority.className = 'demo.Rol'
 grails.plugins.springsecurity.requestMap.className = 'demo.Requestmap'
 grails.plugins.springsecurity.securityConfigType = 'Requestmap'
+
+grails.plugins.springsecurity.interceptUrlMap = [
+        '/js/**':        ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/css/**':       ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/images/**':    ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/static/**':    ['IS_AUTHENTICATED_ANONYMOUSLY']
+]
+
+grails.plugins.springsecurity.rememberMe.alwaysRemember = true
+grails.plugins.springsecurity.rememberMe.tokenValiditySeconds = 1200
+grails.plugins.springsecurity.rememberMe.cookieName = 'demo_grails'
