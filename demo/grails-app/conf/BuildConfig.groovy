@@ -64,6 +64,10 @@ grails.project.dependency.resolution = {
 
         compile ":joda-time:1.4"
 
+        //Twitter bootstrap
+        runtime ":twitter-bootstrap:2.3.2"
 
+        //Grails Fields
+        compile ":fields:1.3"
     }
 }

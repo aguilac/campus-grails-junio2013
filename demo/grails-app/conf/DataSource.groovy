@@ -10,12 +10,13 @@ hibernate {
     cache.use_query_cache = true
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
     //naming_strategy = 'demo.DBStrategy' //Personalizar la estrategia para generación de tablas y columnas
+    format_sql = true
+    use_sql_comments = true
 }
 // environment specific settings
 environments {
     development {
         dataSource {
-            logSql = true
             pooled = true
             driverClassName = "com.mysql.jdbc.Driver"
             username = "demo"
