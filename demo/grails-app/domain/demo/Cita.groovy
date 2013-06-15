@@ -21,20 +21,8 @@ class Cita {
         estado(nullable: false)
     }
 
-    def beforeInsert() {
-        calcularFechaFin()
-    }
 
-    def beforeUpdate() {
-        calcularFechaFin()
-    }
-
-    def calcularFechaFin() {
-        use(TimeCategory) {
-            fechaFin = fechaInicio?.plus(medico?.duracionCita?.minutes)
-        }
-    }
-
+    //TODO: calcular fecha de fin
     //TODO: aplicar verificación de horarios de citas
     //TODO: verificación de horarios conforme al médico
 }
