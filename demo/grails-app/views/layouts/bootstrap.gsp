@@ -43,7 +43,9 @@
 					<div class="nav-collapse">
 						<ul class="nav">							
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
-
+                            <sec:ifLoggedIn>
+                                <li><g:link controller="logout" action="index">Salir</g:link></li>
+                            </sec:ifLoggedIn>
 						</ul>
 					</div>
 				</div>

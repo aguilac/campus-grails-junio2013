@@ -1,3 +1,4 @@
+<sec:ifLoggedIn>
 <!doctype html>
 <html>
 	<head>
@@ -75,3 +76,7 @@ grails-app/views/_fields/default/_field.gsp</pre>
 		
 	</body>
 </html>
+</sec:ifLoggedIn>
+<sec:ifNotLoggedIn>
+    <g:include controller="login" action="auth" />
+</sec:ifNotLoggedIn>
