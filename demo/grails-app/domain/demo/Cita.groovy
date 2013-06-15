@@ -26,7 +26,7 @@ class Cita {
     }
 
     static mapping = {
-        table 'medicos'
+        table 'cita'
         sort 'fechaInicio'
     }
 
