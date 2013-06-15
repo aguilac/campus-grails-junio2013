@@ -13,6 +13,7 @@ class Paciente {
     static transients = ['edad']
 
     static constraints = {
+        nombreCompleto(blank: false)
         ocupacion(blank: false)
         contacto(nullable: false)
         fechaNacimiento(nullable: false)
