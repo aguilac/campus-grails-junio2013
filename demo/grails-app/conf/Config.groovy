@@ -92,3 +92,10 @@ log4j = {
     debug 'org.hibernate.SQL'
     trace 'org.hibernate.type.descriptor.sql.BasicBinder'
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'demo.Usuario'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'demo.UsuarioRol'
+grails.plugins.springsecurity.authority.className = 'demo.Rol'
+grails.plugins.springsecurity.requestMap.className = 'demo.Requestmap'
+grails.plugins.springsecurity.securityConfigType = 'Requestmap'

@@ -4,18 +4,14 @@ import org.joda.time.DateMidnight
 import org.joda.time.DateTime
 import org.joda.time.Years
 
-class Paciente {
-    String nombreCompleto
-    Contacto contacto
+class Paciente extends Usuario {
     Date fechaNacimiento
     String ocupacion
 
     static transients = ['edad']
 
     static constraints = {
-        nombreCompleto(blank: false)
         ocupacion(blank: false)
-        contacto(nullable: false)
         fechaNacimiento(nullable: false)
         fechaNacimiento validator: {val->
             val.before(new Date())

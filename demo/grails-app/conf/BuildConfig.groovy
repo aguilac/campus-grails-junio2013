@@ -69,5 +69,8 @@ grails.project.dependency.resolution = {
 
         //Grails Fields
         compile ":fields:1.3"
+
+        //Spring security
+        compile ':spring-security-core:1.2.7.3'
     }
 }
